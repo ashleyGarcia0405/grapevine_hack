@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Navbar from '../components/Navbar';
+import UserCard from '../components/UserCard';
 
 export default function Matches() {
   const [matches, setMatches] = useState({});
@@ -40,15 +41,11 @@ export default function Matches() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Your Matches</h1>
-        <div className="mb-8 p-4 bg-white rounded-lg shadow">
-          <h2 className="text-2xl font-semibold mb-4">Matches for {session.user.name}</h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {currentUserMatches.map((user, userIndex) => (
-            <div key={userIndex} className="mb-2">
-              <p className="font-medium">{user.name}</p>
-              <p className="text-sm text-gray-600">{user.projectInterest}</p>
-            </div>
+            <UserCard key={userIndex} user={user} />
           ))}
         </div>
       </div>
