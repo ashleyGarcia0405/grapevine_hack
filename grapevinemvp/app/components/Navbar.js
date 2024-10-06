@@ -45,6 +45,9 @@ const Navbar = () => {
               <Link href="/matches" className="mr-4 hover:text-purple-200">
                 Matches🥂
               </Link>
+              <Link href="/exploreProjects" className="block py-2 hover:text-purple-200">
+                Projects🤖
+              </Link>
               <button 
                 onClick={() => signOut({ callbackUrl: '/' })}
                 className=" text-gray-600 font-bold py-2 px-4 rounded"
@@ -87,6 +90,9 @@ const Navbar = () => {
               </Link>
               <Link href="/matches" className="block py-2 hover:text-purple-200">
                 Matches🥂
+              </Link>
+              <Link href="/exploreProjects" className="block py-2 hover:text-purple-200">
+                Projects🤖
               </Link>
               <button 
                 onClick={() => signOut({ callbackUrl: '/' })}
