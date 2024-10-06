@@ -1,8 +1,4 @@
-
-// /app/services/matchService.js
-
 import User from '@/models/User';
-import Group from '@/models/Groups'; // Make sure you have a Group model
 
 
 function calculateSimilarity(user1, user2) {
@@ -24,39 +20,25 @@ function calculateSimilarity(user1, user2) {
 export async function matchServices() {
   try {
     const users = await User.find(); 
-    const groups = [];
-    
-    while (users.length >= 4) {
-      let group = [];
-      let seedUser = users.pop();
-      group.push(seedUser);
-      
-      for (let i = 0; i < 3; i++) {
-        let bestMatch = null;
-        let highestScore = -1;
+    const topMatches = {}; // Store top matches for each user
 
-        for (const user of users) {
-          let score = calculateSimilarity(seedUser, user);
-          if (score > highestScore) {
-            bestMatch = user;
-            highestScore = score;
-          }
-        }
+    for (const user of users) {
+      topMatches[user._id] = []; // Initialize an array for each user
+      const scores = []; // To hold scores for all users
 
-        if (bestMatch) {
-          group.push(bestMatch);
-          users.splice(users.indexOf(bestMatch), 1);
+      for (const potentialMatch of users) {
+        if (user._id !== potentialMatch._id) { // Avoid matching the user with themselves
+          let score = calculateSimilarity(user, potentialMatch);
+          scores.push({ user: potentialMatch, score });
         }
       }
 
-      groups.push(group);
-      
-      // Save the group to the database
-      const groupToSave = new Group({ members: group.map(user => user._id) });
-      await groupToSave.save();
+      // Sort scores in descending order and take the top 3 matches
+      scores.sort((a, b) => b.score - a.score);
+      topMatches[user._id] = scores.slice(0, 2).map(match => match.user); // Get top 2 matches
     }
 
-    return groups;
+    return topMatches; // Return the top matches for each user
   } catch (error) {
     console.error("Error matching users:", error);
     throw error; // Rethrow the error so it can be caught in the API route

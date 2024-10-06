@@ -23,7 +23,9 @@ const UserSchema = new mongoose.Schema({
   }],
   projectInterest: { type: String },
   interests: [{ type: String }],
-  events: [{ type: String }]
+  events: [{ type: String }],
+  availability: { type: String }, // could add later
+  matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Match' }] // Array of match references
 }, { timestamps: true });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

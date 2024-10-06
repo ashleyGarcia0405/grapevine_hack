@@ -113,8 +113,14 @@ export default function UserProfile() {
                     </button>
                 )} */}
             </div> 
+            <button
+                onClick={() => window.location.href = `mailto:${user.email}?subject=Collaboration Request&body=Hello ${user.name},%0D%0A%0D%0AI'd like to request a collaboration with you.`}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 px-4 rounded transition duration-300 ease-in-out"
+                >
+            Request Collaboration
+            </button>
             <Tabs>
-                <TabList className="flex border-b">
+                <TabList className="flex border-b mt-10">
                     <Tab className="px-4 py-2 font-semibold text-gray-700 hover:text-purple-600 focus:outline-none">
                         Personal
                     </Tab>
@@ -162,7 +168,7 @@ export default function UserProfile() {
                             </section>
                             <section className="mb-6">
                                 <h2 className="text-xl font-semibold mb-2">Contact</h2>
-                                <p className="text-gray-600 mb-2">{user.email}</p>
+                               
                                 {user.location && <p className="text-gray-600 mb-2">{user.location}</p>}
                                 {user.website && <p className="text-gray-600 mb-2"><a href={user.website} target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800">{user.website}</a></p>}
                             </section>
